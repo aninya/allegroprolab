@@ -5,7 +5,7 @@ void Bitir();
  
 int main() {
 Baslat();
-int cinsiyet=0,menu;
+int cinsiyet=2,menu;
 
 BITMAP *arakatman=create_bitmap(960,540);
 BITMAP *arakatman2=create_bitmap(960,540);
@@ -98,6 +98,7 @@ masked_blit(bh,arakatman2,0,0,150,160,32,44);
 masked_blit(e,arakatman2,0,0,120,160,32,44);
 cinsiyet=0;
 }
+///////cisiyet ekrana yazdır//////////////
 if(cinsiyet==1)
 {
 	textout_ex(arakatman,font,"erkek",250,0,makecol(255,255,255),-1);
