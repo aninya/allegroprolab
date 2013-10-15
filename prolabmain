@@ -20,7 +20,7 @@ BITMAP *sttl=load_bitmap("stitle.bmp",NULL);
 BITMAP *sfttl=load_bitmap("sftitle.bmp",NULL);
 show_mouse(screen);
 clear_to_color(arakatman,makecol(29,29,29));
-clear_to_color(arakatman2,makecol(29,29,29));
+clear_to_color(arakatman2,makecol(29,29,29)); /*arakatman2 butonlara bastığımızda sadece sağ alt kısımdaki alanın sıfırlanması için */
 while (!key[KEY_ESC]) {
 
 	masked_blit(bck,arakatman,0,0,0,0,960,60);
