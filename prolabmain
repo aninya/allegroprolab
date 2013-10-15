@@ -1,11 +1,12 @@
 #include <allegro.h>
+#include <math.h>
 
 void Baslat();
 void Bitir();
  
 int main() {
 Baslat();
-int cinsiyet=2,menu;
+int cinsiyet=2,menu,k,knum=0;
 
 BITMAP *arakatman=create_bitmap(960,540);
 BITMAP *arakatman2=create_bitmap(960,540);
@@ -26,7 +27,9 @@ BITMAP *eh=load_bitmap("eh.bmp",NULL);
 BITMAP *bh=load_bitmap("bh.bmp",NULL);
 BITMAP *oto=load_bitmap("otobus.bmp",NULL);
 BITMAP *srgl=load_bitmap("srgl.bmp",NULL);
+
 show_mouse(screen);
+
 clear_to_color(arakatman,makecol(29,29,29));
 clear_to_color(arakatman2,makecol(29,29,29)); /*arakatman2 butonlara bastığımızda sadece sağ alt kısımdaki alanın sıfırlanması için */
 while (!key[KEY_ESC]) {
@@ -36,39 +39,17 @@ blit(b1,arakatman,0,0,15,75,85,85);
 blit(b2,arakatman,0,0,15,167,85,85);
 blit(b3,arakatman,0,0,15,258,85,85);
 
-
-/////////kod yazarken mouse kordinatı yardımcısı/////
+/////////kod yazarken mouse kordinatı yardımcısı & koltuk numarası bildirici/////
 textprintf_ex(arakatman, font, 100, 0, makecol(255, 255, 255),-1, "x: %d y: %d", mouse_x,mouse_y);
-
+textprintf_ex(arakatman, font, 300, 0, makecol(255, 255, 255),-1, "koltuk: %d ", knum);
 
 //**********************************************//
 // Mouse ile tuşların üstüne gelince parlaması  //
 //**********************************************//
 
-if(!(mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>75 && mouse_y<160)
-{
-blit(b1h,arakatman,0,0,15,75,85,85);
-}
-if(!(mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>167 && mouse_y<250)
-{
-blit(b2h,arakatman,0,0,15,167,85,85);
-}
-if(!(mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>258 && mouse_y<328)
-{
-blit(b3h,arakatman,0,0,15,257,85,85);
-}
-if(!(mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>258 && mouse_y<328)
-{
-blit(b3h,arakatman,0,0,15,258,85,85);
-}
-if(!(mouse_b & 1) && mouse_x>900 && mouse_x<960 && mouse_y>0 && mouse_y<60)
-{
-blit(ext,arakatman,0,0,895,0,60,60);
-
-}
 //**********************************************//
-   // mouse tıklamalar //
-   //**********************************************//
+//				mouse tıklamalar				//
+//**********************************************//
 //////////çıkış/////////
 if((mouse_b & 1) && mouse_x>900 && mouse_x<960 && mouse_y>0 && mouse_y<60)
 {
@@ -80,7 +61,7 @@ if((mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>75 && mouse_y<160)
 menu=1;
 clear_to_color(arakatman2,makecol(29,29,29));
 blit(ttl,arakatman2,0,0,0,0,120,260);
-blit(oto,arakatman2,0,0,500,10,263,463);
+blit(oto,arakatman2,0,0,500,9,263,463);
 masked_blit(e,arakatman2,0,0,120,160,27,37);
 masked_blit(b,arakatman2,0,0,150,160,27,37);
 
@@ -107,6 +88,37 @@ if(cinsiyet==0)
 {
 	textout_ex(arakatman,font,"bayan",250,0,makecol(255,255,255),-1);
 }
+///////koltuk secimi algoritması/////////////////////
+/* seçim y ekseni koltuk baslangic 120
+	  sıra1		  sıra2		  sıra3		  sıra4
+	710<x<750   758<x<798	854<x<894	904<x<944
+		1			2			3			4
+*/
+if((mouse_b & 1) && mouse_x>710 && mouse_x<750 && menu==1)
+{
+k=(mouse_y-80)/40;
+knum = 4*(k-1)+1;
+}
+if((mouse_b & 1) && mouse_x>758 && mouse_x<798 && menu==1)
+{
+k=(mouse_y-80)/40;
+knum = 4*(k-1)+2;
+}
+if((mouse_b & 1) && mouse_x>854 && mouse_x<894 && menu==1)
+{
+k=(mouse_y-80)/40;
+knum = 4*(k-1)+3;
+}
+
+if((mouse_b & 1) && mouse_x>904 && mouse_x<944 && menu==1)
+{
+k=(mouse_y - 80) /40;
+knum = 4*k;
+}
+
+
+
+
 //////////seferler/////////
 if((mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>168 && mouse_y<250)
 {
