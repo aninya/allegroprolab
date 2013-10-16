@@ -176,3 +176,4 @@ install_mouse();
 }
 void Bitir() {
 clear_keybuf();
+}
