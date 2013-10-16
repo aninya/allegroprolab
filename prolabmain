@@ -6,7 +6,7 @@ void Bitir();
  
 int main() {
 Baslat();
-int cinsiyet=2,menu,k,knum=0;
+int cinsiyet=2,menu,k,knum=0,r;
 
 BITMAP *arakatman=create_bitmap(960,540);
 BITMAP *arakatman2=create_bitmap(960,540);
@@ -27,6 +27,8 @@ BITMAP *eh=load_bitmap("eh.bmp",NULL);
 BITMAP *bh=load_bitmap("bh.bmp",NULL);
 BITMAP *oto=load_bitmap("otobus.bmp",NULL);
 BITMAP *srgl=load_bitmap("srgl.bmp",NULL);
+BITMAP *ke=load_bitmap("ke.bmp",NULL);
+BITMAP *kb=load_bitmap("kb.bmp",NULL);
 
 show_mouse(screen);
 
@@ -103,28 +105,73 @@ if((mouse_b & 1) && mouse_x>710 && mouse_x<750 && mouse_y>120 && mouse_y<500 && 
 {
 k=(mouse_y-80)/38;
 knum = 4*(k-1)+1;
+r= 120 + 38*(k-1);
+	////koltuk bastırma////
+	if(cinsiyet==1)
+	{
+		blit(ke,arakatman2,0,0,710-197,r-60,38,38);
+	}
+	if(cinsiyet==0)
+	{
+
+		blit(kb,arakatman2,0,0,710-197,r-60,38,38);
+	}
 }
 if((mouse_b & 1) && mouse_x>758 && mouse_x<798 && mouse_y>120 && mouse_y<500 && menu==1)
 {
 k=(mouse_y-80)/38;
 knum = 4*(k-1)+2;
+r= 120 + 38*(k-1);
+
+	if(cinsiyet==1)
+	{
+		blit(ke,arakatman2,0,0,758-196,r-60,38,38);
+	}
+	if(cinsiyet==0)
+	{
+
+		blit(kb,arakatman2,0,0,758-196,r-60,38,38);
+	}
 }
 if((mouse_b & 1) && mouse_x>854 && mouse_x<894 && mouse_y>120 && mouse_y<280 &&  menu==1)
 {
 k=(mouse_y-80)/38;
 knum = 4*(k-1)+3;
+r= 120 + 38*(k-1);
+
+	if(cinsiyet==1)
+	{
+		blit(ke,arakatman2,0,0,854-195,r-60,38,38);
+	}
+	if(cinsiyet==0)
+	{
+
+		blit(kb,arakatman2,0,0,854-195,r-60,38,38);
+	}
 }
 
 if((mouse_b & 1) && mouse_x>904 && mouse_x<944 && mouse_y>120 && mouse_y<280 && menu==1)
 {
 k=(mouse_y - 80) /38;
 knum = 4*k;
+r= 120 + 38*(k-1);
+
+	if(cinsiyet==1)
+	{
+		blit(ke,arakatman2,0,0,904-196,r-60,38,38);
+	}
+	if(cinsiyet==0)
+	{
+
+		blit(kb,arakatman2,0,0,904-196,r-60,38,38);
+	}
 }
 ////////////orta kapidan sonra ////////////////////////
 if((mouse_b & 1) && mouse_x>854 && mouse_x<894 && mouse_y>310 && mouse_y<500 &&  menu==1)
 {
 k=(mouse_y-110)/38;
 knum = 4*(k-1)+3;
+
 }
 
 if((mouse_b & 1) && mouse_x>904 && mouse_x<944 && mouse_y>310 && mouse_y<500 && menu==1)
