@@ -47,7 +47,7 @@ char s;
 
 	while (!key[KEY_ESC]) {
 				
-				blit(p,arakatman,0,0,20,400,50,50); /* olası hata durumunda debug testi için */
+				//blit(p,arakatman,0,0,20,400,50,50); /* olası hata durumunda debug testi için */
 	
 			    blit(bck,arakatman,0,0,0,0,960,60);
                 blit(b1,arakatman,0,0,15,75,85,85);
