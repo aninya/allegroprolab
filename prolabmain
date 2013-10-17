@@ -4,211 +4,212 @@ void Baslat();
 void Bitir();
 
  
-int main() {
+int main() 
+{
 Baslat();
-int cinsiyet=2,menu,k,knum=0,r;
+	int cinsiyet=2,menu,k,knum=0,r;
 
-BITMAP *arakatman=create_bitmap(960,540);
-BITMAP *arakatman2=create_bitmap(760,480);
-BITMAP *arakatman3=create_bitmap(263,463);
-BITMAP *b1=load_bitmap("yeni.bmp",NULL);
-BITMAP *b2=load_bitmap("sef.bmp",NULL);
-BITMAP *b3=load_bitmap("sorg.bmp",NULL);
-BITMAP *bck=load_bitmap("bck.bmp",NULL);
-BITMAP *ext=load_bitmap("ext.bmp",NULL);
-BITMAP *b1h=load_bitmap("yenih.bmp",NULL);
-BITMAP *b2h=load_bitmap("sefh.bmp",NULL);
-BITMAP *b3h=load_bitmap("sorgh.bmp",NULL);
-BITMAP *ttl=load_bitmap("title.bmp",NULL);
-BITMAP *sttl=load_bitmap("stitle.bmp",NULL);
-BITMAP *sfttl=load_bitmap("sftitle.bmp",NULL);
-BITMAP *e=load_bitmap("e.bmp",NULL);
-BITMAP *b=load_bitmap("b.bmp",NULL);
-BITMAP *eh=load_bitmap("eh.bmp",NULL);
-BITMAP *bh=load_bitmap("bh.bmp",NULL);
-BITMAP *oto=load_bitmap("otobus.bmp",NULL);
-BITMAP *srgl=load_bitmap("srgl.bmp",NULL);
-BITMAP *ke=load_bitmap("ke.bmp",NULL);
-BITMAP *kb=load_bitmap("kb.bmp",NULL);
+	BITMAP *arakatman=create_bitmap(960,540);
+	BITMAP *arakatman2=create_bitmap(760,480);
+	BITMAP *arakatman3=create_bitmap(263,463);
+	BITMAP *b1=load_bitmap("yeni.bmp",NULL);
+	BITMAP *b2=load_bitmap("sef.bmp",NULL);
+	BITMAP *b3=load_bitmap("sorg.bmp",NULL);
+	BITMAP *bck=load_bitmap("bck.bmp",NULL);
+	BITMAP *ext=load_bitmap("ext.bmp",NULL);
+	BITMAP *b1h=load_bitmap("yenih.bmp",NULL);
+	BITMAP *b2h=load_bitmap("sefh.bmp",NULL);
+	BITMAP *b3h=load_bitmap("sorgh.bmp",NULL);
+	BITMAP *ttl=load_bitmap("title.bmp",NULL);
+	BITMAP *sttl=load_bitmap("stitle.bmp",NULL);
+	BITMAP *sfttl=load_bitmap("sftitle.bmp",NULL);
+	BITMAP *e=load_bitmap("e.bmp",NULL);
+	BITMAP *b=load_bitmap("b.bmp",NULL);
+	BITMAP *eh=load_bitmap("eh.bmp",NULL);
+	BITMAP *bh=load_bitmap("bh.bmp",NULL);
+	BITMAP *oto=load_bitmap("otobus.bmp",NULL);
+	BITMAP *srgl=load_bitmap("srgl.bmp",NULL);
+	BITMAP *ke=load_bitmap("ke.bmp",NULL);
+	BITMAP *kb=load_bitmap("kb.bmp",NULL);
 
-show_mouse(screen);
+	show_mouse(screen);
 
-clear_to_color(arakatman,makecol(29,29,29));
-clear_to_color(arakatman2,makecol(29,29,29)); /*arakatman2 butonlara bastığımızda sadece sağ alt kısımdaki alanın sıfırlanması için */
+	clear_to_color(arakatman,makecol(29,29,29));
+	clear_to_color(arakatman2,makecol(29,29,29)); /*arakatman2 butonlara bastığımızda sadece sağ alt kısımdaki alanın sıfırlanması için */
 
-while (!key[KEY_ESC]) {
+	while (!key[KEY_ESC]) {
 
-	blit(bck,arakatman,0,0,0,0,960,60);
-	blit(b1,arakatman,0,0,15,75,85,85);
-	blit(b2,arakatman,0,0,15,167,85,85);
-	blit(b3,arakatman,0,0,15,258,85,85);
+		blit(bck,arakatman,0,0,0,0,960,60);
+		blit(b1,arakatman,0,0,15,75,85,85);
+		blit(b2,arakatman,0,0,15,167,85,85);
+		blit(b3,arakatman,0,0,15,258,85,85);
 
-	/////////kod yazarken mouse kordinatı yardımcısı & koltuk numarası bildirici/////
-	textprintf_ex(arakatman, font, 100, 0, makecol(255, 255, 255),-1, "x: %d y: %d", mouse_x,mouse_y);
-	textprintf_ex(arakatman, font, 300, 0, makecol(255, 255, 255),-1, "koltuk: %d ", knum);
+		/////////kod yazarken mouse kordinatı yardımcısı & koltuk numarası bildirici/////
+		textprintf_ex(arakatman, font, 100, 0, makecol(255, 255, 255),-1, "x: %d y: %d", mouse_x,mouse_y);
+		textprintf_ex(arakatman, font, 300, 0, makecol(255, 255, 255),-1, "koltuk: %d ", knum);
 
-	//**********************************************//
-	//				mouse tıklamalar				//
-	//**********************************************//
-	//////////çıkış/////////
-	if(!(mouse_b & 1) && mouse_x>900 && mouse_x<960 && mouse_y>0 && mouse_y<60)
-	{
-		blit(ext,arakatman,0,0,895,0,60,60);
-	}
-	if((mouse_b & 1) && mouse_x>900 && mouse_x<960 && mouse_y>0 && mouse_y<60)
+		//**********************************************//
+		//				mouse tıklamalar				//
+		//**********************************************//
+		//////////çıkış/////////
+		if(!(mouse_b & 1) && mouse_x>900 && mouse_x<960 && mouse_y>0 && mouse_y<60)
+		{
+			blit(ext,arakatman,0,0,895,0,60,60);
+		}
+		if((mouse_b & 1) && mouse_x>900 && mouse_x<960 && mouse_y>0 && mouse_y<60)
 
-	return 0;
-	}
-	//////////yeni/////////
-	if(!(mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>75 && mouse_y<160)
-	{
-		blit(b1h,arakatman,0,0,15,75,85,86);
-	}
+		return 0;
+		}
+		//////////yeni/////////
+		if(!(mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>75 && mouse_y<160)
+		{
+			blit(b1h,arakatman,0,0,15,75,85,86);
+		}
 
-	if((mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>75 && mouse_y<160)
-	{
-		menu=1;
-		clear_to_color(arakatman2,makecol(29,29,29));
-		blit(ttl,arakatman2,0,0,0,0,120,260);
-		blit(oto,arakatman2,0,0,500,9,263,463);
-		masked_blit(e,arakatman2,0,0,120,160,27,37);
-		masked_blit(b,arakatman2,0,0,150,160,27,37);
+		if((mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>75 && mouse_y<160)
+		{
+			menu=1;
+			clear_to_color(arakatman2,makecol(29,29,29));
+			blit(ttl,arakatman2,0,0,0,0,120,260);
+			blit(oto,arakatman2,0,0,500,9,263,463);
+			masked_blit(e,arakatman2,0,0,120,160,27,37);
+			masked_blit(b,arakatman2,0,0,150,160,27,37);
 
-	}
-	//////////seferler/////////
-	if(!(mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>168 && mouse_y<250)
-	{
-		blit(b2h,arakatman,0,0,15,167,85,86);
-	} 
-	if((mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>168 && mouse_y<250)
-	{
-		menu=2;
-		clear_to_color(arakatman2,makecol(29,29,29));
-		blit(sfttl,arakatman2,0,0,30,20,120,260);
-	}
-	//////////sorgula/////////
-	if(!(mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>258 && mouse_y<328)
-	{
-	blit(b3h,arakatman,0,0,15,258,85,86);
-	}
-	if((mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>258 && mouse_y<328)
-	{
-		menu=3;
-		clear_to_color(arakatman2,makecol(29,29,29));
-		blit(srgl,arakatman2,0,0,0,30,120,260);
-	}
+		}
+		//////////seferler/////////
+		if(!(mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>168 && mouse_y<250)
+		{
+			blit(b2h,arakatman,0,0,15,167,85,86);
+		} 
+		if((mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>168 && mouse_y<250)
+		{
+			menu=2;
+			clear_to_color(arakatman2,makecol(29,29,29));
+			blit(sfttl,arakatman2,0,0,30,20,120,260);
+		}
+		//////////sorgula/////////
+		if(!(mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>258 && mouse_y<328)
+		{
+		blit(b3h,arakatman,0,0,15,258,85,86);
+		}
+		if((mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>258 && mouse_y<328)
+		{
+			menu=3;
+			clear_to_color(arakatman2,makecol(29,29,29));
+			blit(srgl,arakatman2,0,0,0,30,120,260);
+		}
 
-	///cinsiyet/////
-	if((mouse_b & 1) && mouse_x>315 && mouse_x<347 && mouse_y>220 && mouse_y<264 && menu==1)
-	{
-		masked_blit(eh,arakatman2,0,0,120,160,32,44);
-		masked_blit(b,arakatman2,0,0,150,160,32,44);
-		cinsiyet=1;
-	}
-	if((mouse_b & 1) && mouse_x>347 && mouse_x<379 && mouse_y>220 && mouse_y<264 && menu==1)
-	{
-		masked_blit(bh,arakatman2,0,0,150,160,32,44);
-		masked_blit(e,arakatman2,0,0,120,160,32,44);
-		cinsiyet=0;
-	}
-	///////cisiyet ekrana yazdır//////////////
-	if(cinsiyet==1)
-	{
-		textout_ex(arakatman,font,"erkek",250,0,makecol(255,255,255),-1);
-	}
-	if(cinsiyet==0)
-	{
-		textout_ex(arakatman,font,"bayan",250,0,makecol(255,255,255),-1);
-	}
-	///////koltuk secimi algoritması/////////////////////
-	/* seçim y ekseni koltuk baslangic 120
-		  sıra1		  sıra2		  sıra3		  sıra4
-		710<x<750   758<x<798	854<x<894	904<x<944
-			1			2			3			4
-	*/
-	if((mouse_b & 1) && mouse_x>710 && mouse_x<750 && mouse_y>120 && mouse_y<500 && menu==1)
-	{
-	k=(mouse_y-80)/38;
-	knum = 4*(k-1)+1;
-	r= 120 + 38*(k-1);
-		////koltuk bastırma////
+		///cinsiyet/////
+		if((mouse_b & 1) && mouse_x>315 && mouse_x<347 && mouse_y>220 && mouse_y<264 && menu==1)
+		{
+			masked_blit(eh,arakatman2,0,0,120,160,32,44);
+			masked_blit(b,arakatman2,0,0,150,160,32,44);
+			cinsiyet=1;
+		}
+		if((mouse_b & 1) && mouse_x>347 && mouse_x<379 && mouse_y>220 && mouse_y<264 && menu==1)
+		{
+			masked_blit(bh,arakatman2,0,0,150,160,32,44);
+			masked_blit(e,arakatman2,0,0,120,160,32,44);
+			cinsiyet=0;
+		}
+		///////cisiyet ekrana yazdır//////////////
 		if(cinsiyet==1)
 		{
-			blit(ke,arakatman3,0,0,13,51,38,38);
+			textout_ex(arakatman,font,"erkek",250,0,makecol(255,255,255),-1);
 		}
 		if(cinsiyet==0)
 		{
-			blit(kb,arakatman3,0,0,13,51,38,38);
+			textout_ex(arakatman,font,"bayan",250,0,makecol(255,255,255),-1);
 		}
-	}
-	if((mouse_b & 1) && mouse_x>758 && mouse_x<798 && mouse_y>120 && mouse_y<500 && menu==1)
-	{
-	k=(mouse_y-80)/38;
-	knum = 4*(k-1)+2;
-	r= 120 + 38*(k-1);
-
-		if(cinsiyet==1)
+		///////koltuk secimi algoritması/////////////////////
+		/* seçim y ekseni koltuk baslangic 120
+			  sıra1		  sıra2		  sıra3		  sıra4
+			710<x<750   758<x<798	854<x<894	904<x<944
+				1			2			3			4
+		*/
+		if((mouse_b & 1) && mouse_x>710 && mouse_x<750 && mouse_y>120 && mouse_y<500 && menu==1)
 		{
-			blit(ke,arakatman3,0,0,62,51,38,38);
+		k=(mouse_y-80)/38;
+		knum = 4*(k-1)+1;
+		r= 120 + 38*(k-1);
+			////koltuk bastırma////
+			if(cinsiyet==1)
+			{
+				blit(ke,arakatman3,0,0,13,51,38,38);
+			}
+			if(cinsiyet==0)
+			{
+				blit(kb,arakatman3,0,0,13,51,38,38);
+			}
 		}
-		if(cinsiyet==0)
+		if((mouse_b & 1) && mouse_x>758 && mouse_x<798 && mouse_y>120 && mouse_y<500 && menu==1)
 		{
-			blit(kb,arakatman3,0,0,62,51,38,38);
-		}
-	}
-	if((mouse_b & 1) && mouse_x>854 && mouse_x<894 && mouse_y>120 && mouse_y<280 &&  menu==1)
-	{
-	k=(mouse_y-80)/38;
-	knum = 4*(k-1)+3;
-	r= 120 + 38*(k-1);
+		k=(mouse_y-80)/38;
+		knum = 4*(k-1)+2;
+		r= 120 + 38*(k-1);
 
-		if(cinsiyet==1)
+			if(cinsiyet==1)
+			{
+				blit(ke,arakatman3,0,0,62,51,38,38);
+			}
+			if(cinsiyet==0)
+			{
+				blit(kb,arakatman3,0,0,62,51,38,38);
+			}
+		}
+		if((mouse_b & 1) && mouse_x>854 && mouse_x<894 && mouse_y>120 && mouse_y<280 &&  menu==1)
 		{
-			blit(ke,arakatman3,0,0,159,51,38,38);
+		k=(mouse_y-80)/38;
+		knum = 4*(k-1)+3;
+		r= 120 + 38*(k-1);
+
+			if(cinsiyet==1)
+			{
+				blit(ke,arakatman3,0,0,159,51,38,38);
+			}
+			if(cinsiyet==0)
+			{
+
+				blit(kb,arakatman3,0,0,159,51,38,38);
+			}
 		}
-		if(cinsiyet==0)
+
+		if((mouse_b & 1) && mouse_x>904 && mouse_x<944 && mouse_y>120 && mouse_y<280 && menu==1)
 		{
+		k=(mouse_y - 80) /38;
+		knum = 4*k;
+		r= 120 + 38*(k-1);
 
-			blit(kb,arakatman3,0,0,159,51,38,38);
+			if(cinsiyet==1)
+			{
+				blit(ke,arakatman3,0,0,208,51,38,38);
+			}
+			if(cinsiyet==0)
+			{
+
+				blit(kb,arakatman3,0,0,208,51,38,38);
+			}
 		}
-	}
-
-	if((mouse_b & 1) && mouse_x>904 && mouse_x<944 && mouse_y>120 && mouse_y<280 && menu==1)
-	{
-	k=(mouse_y - 80) /38;
-	knum = 4*k;
-	r= 120 + 38*(k-1);
-
-		if(cinsiyet==1)
+		////////////orta kapidan sonra ////////////////////////
+		if((mouse_b & 1) && mouse_x>854 && mouse_x<894 && mouse_y>310 && mouse_y<500 &&  menu==1)
 		{
-			blit(ke,arakatman3,0,0,208,51,38,38);
+		k=(mouse_y-110)/38;
+		knum = 4*(k-1)+3;
+
 		}
-		if(cinsiyet==0)
+
+		if((mouse_b & 1) && mouse_x>904 && mouse_x<944 && mouse_y>310 && mouse_y<500 && menu==1)
 		{
-
-			blit(kb,arakatman3,0,0,208,51,38,38);
+		k=(mouse_y - 110) /38;
+		knum = 4*k;
 		}
-	}
-	////////////orta kapidan sonra ////////////////////////
-	if((mouse_b & 1) && mouse_x>854 && mouse_x<894 && mouse_y>310 && mouse_y<500 &&  menu==1)
-	{
-	k=(mouse_y-110)/38;
-	knum = 4*(k-1)+3;
 
-	}
+		blit(arakatman,screen,0,0,0,0,960,540);
+		blit(arakatman2,screen,0,0,195,60,760,480);
+		blit(arakatman3,screen,0,0,695,69,263,463);
+		rest(60);
 
-	if((mouse_b & 1) && mouse_x>904 && mouse_x<944 && mouse_y>310 && mouse_y<500 && menu==1)
-	{
-	k=(mouse_y - 110) /38;
-	knum = 4*k;
-	}
-
-	blit(arakatman,screen,0,0,0,0,960,540);
-	blit(arakatman2,screen,0,0,195,60,760,480);
-	blit(arakatman3,screen,0,0,695,69,263,463);
-	rest(60);
-
-}
+		}
 Bitir();
 return 0;
 }
