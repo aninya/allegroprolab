@@ -267,7 +267,7 @@ char s;
 								if(ksec==1)
 								{
 									 clear_to_color(arakatman3,makecol(29,29,29));
-									 blit(oto,arakatman3,0,0,0,0,263,463);
+									 blit(oto,arakatman3,0,0,0,0,263,480);
 									 ksec=0;
 								}
                                 blit(ke,arakatman3,0,0,159,r,38,38);
@@ -278,7 +278,7 @@ char s;
 								if(ksec==1)
 								{
 									 clear_to_color(arakatman3,makecol(29,29,29));
-									 blit(oto,arakatman3,0,0,0,0,263,463);
+									 blit(oto,arakatman3,0,0,0,0,263,480);
 									 ksec=0;
 								}
                                 blit(kb,arakatman3,0,0,159,r,38,38);
@@ -297,7 +297,7 @@ char s;
 								if(ksec==1)
 								{
 									 clear_to_color(arakatman3,makecol(29,29,29));
-									 blit(oto,arakatman3,0,0,0,0,263,463);
+									 blit(oto,arakatman3,0,0,0,0,263,480);
 									 ksec=0;
 								}
                                 blit(ke,arakatman3,0,0,208,r,38,38);
@@ -308,7 +308,7 @@ char s;
 								if(ksec==1)
 								{
 									 clear_to_color(arakatman3,makecol(29,29,29));
-									 blit(oto,arakatman3,0,0,0,0,263,463);
+									 blit(oto,arakatman3,0,0,0,0,263,480);
 									 ksec=0;
 								}
                                 blit(kb,arakatman3,0,0,208,r,38,38);
