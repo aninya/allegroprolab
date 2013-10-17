@@ -10,7 +10,7 @@ char s;
 
     BITMAP *arakatman=create_bitmap(960,540);
     BITMAP *arakatman2=create_bitmap(760,480);
-    BITMAP *arakatman3=create_bitmap(263,463);
+    BITMAP *arakatman3=create_bitmap(263,480);
 	BITMAP *ckatman=create_bitmap(64,44);
     BITMAP *b1=load_bitmap("yeni.bmp",NULL);
     BITMAP *b2=load_bitmap("sef.bmp",NULL);
@@ -43,7 +43,7 @@ char s;
 
 	while (!key[KEY_ESC]) {
 				
-				blit(p,arakatman,0,0,20,400,50,50); /*olası hata durumunda debug testi için */
+				blit(p,arakatman,0,0,20,400,50,50); /* olası hata durumunda debug testi için */
 	
 			    blit(bck,arakatman,0,0,0,0,960,60);
                 blit(b1,arakatman,0,0,15,75,85,85);
@@ -76,7 +76,7 @@ char s;
 						clear_to_color(ckatman,makecol(29,29,29));
 						clear_to_color(arakatman3,makecol(29,29,29));
                         blit(ttl,arakatman2,0,0,0,0,120,260);
-                        blit(oto,arakatman3,0,0,0,0,263,463);
+                        blit(oto,arakatman3,0,0,0,0,263,480);
                         masked_blit(e,ckatman,0,0,0,0,32,44);
                         masked_blit(b,ckatman,0,0,32,0,32,44);
 
@@ -149,7 +149,7 @@ char s;
 								if(ksec==1)
 								{
 									 clear_to_color(arakatman3,makecol(29,29,29));
-									 blit(oto,arakatman3,0,0,0,0,263,463);
+									 blit(oto,arakatman3,0,0,0,0,263,480);
 									 ksec=0;
 								}
                                 blit(ke,arakatman3,0,0,13,r,38,38);
@@ -160,7 +160,7 @@ char s;
 								if(ksec==1)
 								{
 									 clear_to_color(arakatman3,makecol(29,29,29));
-									 blit(oto,arakatman3,0,0,0,0,263,463);
+									 blit(oto,arakatman3,0,0,0,0,263,480);
 									 ksec=0;
 								}
                                 blit(kb,arakatman3,0,0,13,r,38,38);
@@ -178,7 +178,7 @@ char s;
 								if(ksec==1)
 								{
 									 clear_to_color(arakatman3,makecol(29,29,29));
-									 blit(oto,arakatman3,0,0,0,0,263,463);
+									 blit(oto,arakatman3,0,0,0,0,263,480);
 									 ksec=0;
 								}
                                 blit(ke,arakatman3,0,0,62,r,38,38);
@@ -189,7 +189,7 @@ char s;
 								if(ksec==1)
 								{
 									 clear_to_color(arakatman3,makecol(29,29,29));
-									 blit(oto,arakatman3,0,0,0,0,263,463);
+									 blit(oto,arakatman3,0,0,0,0,263,480);
 									 ksec=0;
 								}
                                 blit(kb,arakatman3,0,0,62,r,38,38);
@@ -207,7 +207,7 @@ char s;
 								if(ksec==1)
 								{
 									 clear_to_color(arakatman3,makecol(29,29,29));
-									 blit(oto,arakatman3,0,0,0,0,263,463);
+									 blit(oto,arakatman3,0,0,0,0,263,480);
 									 ksec=0;
 								}
                                 blit(ke,arakatman3,0,0,159,r,38,38);
@@ -218,7 +218,7 @@ char s;
 								if(ksec==1)
 								{
 									 clear_to_color(arakatman3,makecol(29,29,29));
-									 blit(oto,arakatman3,0,0,0,0,263,463);
+									 blit(oto,arakatman3,0,0,0,0,263,480);
 									 ksec=0;
 								}
                                 blit(kb,arakatman3,0,0,159,r,38,38);
@@ -316,7 +316,7 @@ char s;
                         }
                 }
 	blit(ckatman,arakatman2,0,0,120,160,64,44);
-	blit(arakatman3,arakatman2,0,0,500,9,263,463);
+	blit(arakatman3,arakatman2,0,0,500,0,263,480);
 	blit(arakatman2,arakatman,0,0,195,60,760,480);
 	blit(arakatman,screen,0,0,0,0,960,540);
 }
