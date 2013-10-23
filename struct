@@ -1,0 +1,219 @@
+#include<stdio.h>
+#include <string>
+#include <string.h>
+#include <conio.h> 
+
+bool oku_b=false;
+bool oku_d=false;
+bool oku_dongu;
+bool oku_nrdn=true;
+bool oku_nry=true;
+bool oku_ksay=true;
+bool oku_sk=true;
+bool oku_f=true;
+bool oku_t=true;
+
+char cache[600];
+
+struct otobus{
+    char tarih[10],nereden[15],nereye[15],seferkodu[15],fiyat[15],koltuk[38];
+}oto[8];
+struct bilet{
+    char ad[15],soyad[15],sefer[10],cns[10],tarih[10];
+	int kisi;
+}bil;
+
+FILE *dosya_k;
+char d_adi[15]="otobus.txt";
+
+FILE *dosya_s;
+char d_adi_s[15]="seyahat.txt";
+
+FILE *dosya_y;
+char d_adi_y[15]="test.txt";
+
+//void koltuk_oku();
+void sefer_oku();
+void sefer_yaz();
+
+int main()
+{
+	
+	/*koltuk_oku();*/
+	sefer_oku();
+	sefer_yaz();
+
+getch();
+return 0;
+}
+
+//void koltuk_oku()
+//{	
+//	int a=0;
+//	dosya_k=fopen(d_adi,"r+");
+//		if(oku_b==false)	//sürekli okumayı durdurmak için
+//		{
+//			char ch;
+//			ch=fgetc(dosya_k);
+//			while(ch!=42)
+//			{
+//					oto[0].koltuk[a]=ch;
+//					a++;
+//    				ch=fgetc(dosya_k);
+//    				fflush(stdin);
+//				
+//			}
+//			oku_b=true;
+//		}
+//	fclose(dosya_k);
+//}
+
+void sefer_oku()
+{	
+
+	int a=0;
+	int b;
+
+		if(oku_d==false)	//sürekli okumayı durdurmak için
+		{
+			
+			dosya_s=fopen(d_adi_s,"r+");
+			char ch;
+			ch=fgetc(dosya_s);
+			while(!feof(dosya_s))
+			{
+					cache[a]=ch;
+					a++;
+    				ch=fgetc(dosya_s);
+    				fflush(stdin);
+				
+			}
+			oku_d=true;
+			fclose(dosya_s);
+		}
+
+		if(oku_dongu==false)
+		{
+			b=0;
+			oku_dongu=true;
+
+		}
+
+		if(oku_d==true)
+			for(int k=0;k<2;k++)
+			{
+					
+					a=0;
+					oku_t=false;
+					if(oku_t==0 )	//sürekli okumayı durdurmak için
+					{	
+						while(cache[b]!=124)
+						{
+								
+								oto[k].tarih[a]=cache[b];
+								b++;
+								a++;
+						}
+						oku_t=true;
+						oku_nrdn=false;
+						a=0;
+					}
+					if(oku_nrdn==false )	//sürekli okumayı durdurmak için
+					{
+						while(cache[b]!=124)
+						{
+								oto[k].nereden[a]=cache[b];
+								b++;
+								a++;
+						}
+						oku_nrdn=true;
+						oku_nry=false;
+						a=0;
+					}
+					if(oku_nry==false )	//sürekli okumayı durdurmak için
+					{
+						while(cache[b]!=45)
+						{
+								oto[k].nereye[a]=cache[b];
+								b++;
+								a++;
+						}
+						oku_nry=true;
+						oku_ksay=false;
+						a=0;
+					}
+					if(oku_ksay==false )	//sürekli okumayı durdurmak için
+					{
+						while(cache[b]!=124)
+						{
+								oto[k].koltuk[a]=cache[b];
+								b++;
+								a++;
+						}
+						oku_ksay=true;
+						oku_sk=false;
+						a=0;
+					}
+					if(oku_sk==false )	//sürekli okumayı durdurmak için
+					{
+						while(cache[b]!=124)
+						{
+								oto[k].seferkodu[a]=cache[b];
+								b++;
+								a++;
+						}
+						oku_sk=true;
+						oku_f=false;
+						a=0;
+					}
+					if(oku_f==false )	//sürekli okumayı durdurmak için
+					{
+						while(cache[b]!=124)
+						{
+								oto[k].fiyat[a]=cache[b];
+								b++;
+								a++;
+						}
+						oku_f=true;
+						a=0;
+					}
+					b++;
+					if(cache[b]!=42)
+					{
+						oku_nrdn=true;
+						oku_nry=true;
+						oku_ksay=true;
+						oku_sk=true;
+						oku_f=true;
+						a=0;
+					}
+			}
+}
+
+void sefer_yaz()
+{
+	dosya_y=fopen(d_adi_y,"w+");
+
+			for(int a=0;a<8;a++)
+			{
+				for(int b=0;b<16;b++)
+				{
+    				fprintf(dosya_y, "%c",oto[a].tarih[b]);
+				}
+				for(int b=0;b<16;b++)
+				{
+    				fprintf(dosya_y, "%c",oto[a].nereden[b]);
+				}
+				for(int b=0;b<16;b++)
+				{
+    				fprintf(dosya_y, "%c",oto[a].nereye[b]);
+				}
+				for(int b=0;b<16;b++)
+				{
+    				fprintf(dosya_y, "%c",oto[a].koltuk[b]);
+				}
+			}
+
+	fclose(dosya_y);
+}
+
