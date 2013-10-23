@@ -1,0 +1,76 @@
+#include<stdio.h>
+#include <string>
+#include <string.h>
+#include <conio.h> 
+
+
+
+
+struct otobus{
+    char tarih[10],nereden[15],nereye[15],seferkodu[15],fiyat[15],koltuk[38];
+}oto[4];
+
+
+FILE *dosya_y;
+char d_adi_y[15]="test.txt";
+
+void sefer_yaz();
+
+int main()
+{
+	strcpy(oto[0].tarih,"10.12.2012");
+	strcpy(oto[1].tarih,"10.12.2013");
+	strcpy(oto[2].tarih,"10.12.2014");
+	strcpy(oto[3].tarih,"10.12.2015");
+	strcpy(oto[4].tarih,"10.12.2016");
+
+	strcpy(oto[0].nereden,"kocaeli");
+	strcpy(oto[1].nereden,"bursa");
+	strcpy(oto[2].nereden,"balıkesir");
+	strcpy(oto[3].nereden,"manisa");
+	strcpy(oto[4].nereden,"izmir");
+
+	strcpy(oto[0].nereye,"balıkesir");
+	strcpy(oto[1].nereye,"bursa");
+	strcpy(oto[2].nereye,"kocaeli");
+	strcpy(oto[3].nereye,"izmir");
+	strcpy(oto[4].nereye,"manisa");
+
+	strcpy(oto[0].seferkodu,"122bx");
+	strcpy(oto[1].seferkodu,"123bx");
+	strcpy(oto[2].seferkodu,"123bx");
+	strcpy(oto[3].seferkodu,"125bx");
+	strcpy(oto[4].seferkodu,"126bx");
+
+	strcpy(oto[0].fiyat,"15");
+	strcpy(oto[1].fiyat,"14");
+	strcpy(oto[2].fiyat,"13");
+	strcpy(oto[3].fiyat,"12");
+	strcpy(oto[4].fiyat,"11");
+
+	sefer_yaz();
+
+getch();
+return 0;
+}
+
+
+void sefer_yaz()
+{
+	dosya_y=fopen(d_adi_y,"w+");
+
+			for(int a=0;a<4;a++)
+			{
+    				fprintf(dosya_y, "%s",oto[a].tarih);
+    				fprintf(dosya_y, "%s",oto[a].nereden);
+    				fprintf(dosya_y, "%s",oto[a].nereye);
+					fprintf(dosya_y, "%d",oto[a].seferkodu);
+					fprintf(dosya_y, "%d",oto[a].fiyat);
+					fprintf(dosya_y, "%d",oto[a].koltuk);
+					fprintf(dosya_y, "\n");
+			}
+
+	fclose(dosya_y);
+}
+
+
