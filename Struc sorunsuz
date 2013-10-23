@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include <string>
+#include <string.h>
+#include <conio.h> 
+
+struct otobus{
+    char nereye[10],tarih[10],seferkodu[10];
+	char nereden[10];
+	int fiyat;
+	int boskoltuk;
+}oto[4];
+
+FILE *dosya_y;
+char d_adi_y[15]="test.txt";
+
+void sefer_yaz();
+void sefer_oku();
+
+
+int main()
+{
+	sefer_oku();
+
+getch();
+return 0;
+}
+
+void sefer_yaz()
+{
+	dosya_y=fopen(d_adi_y,"w+");
+
+			for(int a=0;a<4;a++)
+			{		
+    				fprintf(dosya_y, "%s ",oto[a].tarih);
+					fprintf(dosya_y, "%s ",oto[a].nereden);
+					fprintf(dosya_y, "%s ",oto[a].nereye);
+					fprintf(dosya_y, "%d ",oto[a].boskoltuk);
+					fprintf(dosya_y, "%s ",oto[a].seferkodu);
+					fprintf(dosya_y, "%d ",oto[a].fiyat);
+					
+					fprintf(dosya_y, "\n");
+			}
+
+	fclose(dosya_y);
+}
+
+void sefer_oku()
+{
+	dosya_y=fopen(d_adi_y,"r+");
+
+			for(int a=0;a<4;a++)
+			{
+    				fscanf(dosya_y, "%s ",&oto[a].tarih);
+					fscanf(dosya_y, "%s ",&oto[a].nereden);
+					fscanf(dosya_y, "%s ",&oto[a].nereye);
+					fscanf(dosya_y, "%d ",&oto[a].boskoltuk);
+					fscanf(dosya_y, "%s ",&oto[a].seferkodu);
+					fscanf(dosya_y, "%d ",&oto[a].fiyat);
+
+			}
+
+	fclose(dosya_y);
+}
