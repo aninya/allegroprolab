@@ -3,48 +3,93 @@
 #include <string>
 #include <string.h> 
 
+
 #define BLACK makecol(0, 0, 0)
 #define WHITE makecol(255, 255, 255)
 
 using namespace std;
 
-string  edittext;                         // an empty string for editting
-string	tarih,yolcu,ad,soyad,ad_s,soyad_s;
+string  edittext;               // an empty string for editting
 string::iterator iter = edittext.begin(); // string iterator
 int     caret  = 0;                       // tracks the text caret
 bool    insert = true;                    // true of should text be inserted
-int active_tbox=0;
-bool oku_b=false;
+int active_tbox1=0;
 
-FILE *dosya;
-char filename[15]="seyahat.txt";
-FILE *dosya_k;
-char d_adi[15]="otobus.txt";
-int eleman_sayisi=0,l=0,m=60,counter=0,o,p,tb=0;
-char koltuk[40];
+string  edittext2;               // an empty string for editting
+string::iterator iter2 = edittext2.begin(); // string iterator
+int     caret2  = 0;                       // tracks the text caret
+bool    insert2 = true;                    // true of should text be inserted
+int active_tbox2=0;
 
-void sefer(BITMAP *,int,int);
-void koltuk_oku(BITMAP *);
+string  edittext3;               // an empty string for editting
+string::iterator iter3 = edittext3.begin(); // string iterator
+int     caret3  = 0;                       // tracks the text caret
+bool    insert3 = true;                    // true of should text be inserted
+int active_tbox3=0;
+
+string  edittext4;               // an empty string for editting
+string::iterator iter4 = edittext4.begin(); // string iterator
+int     caret4  = 0;                       // tracks the text caret
+bool    insert4 = true;                    // true of should text be inserted
+int active_tbox4=0;
+
+
+//void sefer(BITMAP *,int,int);
+struct bilet{
+    char nereye[10],ad[10],soyad[10],seferkodu[10],tarih[10],biletkodu[10];
+	char nereden[10];
+	int fiyat;
+}bil[4];
+
+FILE *dosya_b;
+char d_b[15]="bilet.txt";
+
+struct otobus{
+    char nereye[10];
+	char nereden[10];
+	char tarih[10];
+	char seferkodu[10];
+	char koltuk[38];
+	int fiyat;
+	int boskoltuk;
+}oto[4];
+
+FILE *dosya_y;
+char d_adi_y[15]="sefer.txt";
+
 void txbox(BITMAP *,int);
+void txbox2(BITMAP *,int);
+void txbox3(BITMAP *,int);
+void txbox4(BITMAP *,int);
+void sefer_eyaz(BITMAP *,int , int);
+void sefer_leyaz(BITMAP *,int , int);
+void bilet_eyaz(BITMAP *,int,int);
+void sefer_yaz();
+void sefer_oku();
+void bilet_yaz();
+void bilet_oku();
+void bilet_karsilastir(BITMAP *);
+void bilet_goster(BITMAP *);
+void bilet_kayit();
+void koltuk(BITMAP *);
 void Baslat();
 void Bitir();
- 
-struct otobus{
-    char tarih[15],nn[20],seferkodu[10],fiyat[10];
-}oto;
-struct bilet{
-    char ad[15],soyad[15],sefer[10],cns[10],tarih[10];
-	int kisi;
-}bil;
+
+int bus,knum=0;
+char cns[10];
 
 int main() {
 Baslat();
-int cinsiyet=2,menu=5,k,knum=0,r,ksec=0,x=120,y=110,z=500,comb=0,tkx=0,tky=500;
+int cinsiyet=2,menu=5,k,r,ksec=0,x=120,y=110,z=500,comb=0,tkx=0,tky=500,tk2x=0,tk2y=500,tk3x=0,tk3y=500,tk4x=0,tk4y=500;
 char s;
-char bos[15],cns[10],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12]="kocaeli",man[12]="manisa",bur[12]="bursa",bal[12]="balikesir",izm[12]="izmir";
+char bos[15],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12]="kocaeli",man[12]="manisa",bur[12]="bursa",bal[12]="balikesir",izm[12]="izmir";
 
-
+	sefer_oku();
+	bilet_oku();
 	BITMAP *tk1=create_bitmap(200,30);
+	BITMAP *tk2=create_bitmap(200,30);
+	BITMAP *tk3=create_bitmap(200,30);
+	BITMAP *tk4=create_bitmap(200,30);
     BITMAP *arakatman=create_bitmap(960,540);
     BITMAP *arakatman2=create_bitmap(760,480);
     BITMAP *arakatman3=create_bitmap(263,480);
@@ -67,6 +112,7 @@ char bos[15],cns[10],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12
     BITMAP *bh=load_bitmap("bh.bmp",NULL);
     BITMAP *oto=load_bitmap("otobus.bmp",NULL);
     BITMAP *srgl=load_bitmap("srgl.bmp",NULL);
+	BITMAP *srglb=load_bitmap("srglb.bmp",NULL);
     BITMAP *ke=load_bitmap("ke.bmp",NULL);
     BITMAP *kb=load_bitmap("kb.bmp",NULL);
 	BITMAP *p=load_bitmap("p.bmp",NULL);
@@ -80,6 +126,8 @@ char bos[15],cns[10],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12
 	BITMAP *cbox=load_bitmap("cbox.bmp",NULL);
 	BITMAP *cboxc=load_bitmap("cboxc.bmp",NULL);
 	BITMAP *son=load_bitmap("son.bmp",NULL);
+	BITMAP *sfr=load_bitmap("sfr.bmp",NULL);
+	BITMAP *sfrh=load_bitmap("sfrh.bmp",NULL);
 
 	FONT *advent = load_font("adventpro.pcx",NULL,NULL);
 
@@ -97,7 +145,6 @@ char bos[15],cns[10],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12
 				/*textprintf_ex(arakatman , font,0,10,WHITE,-1,dizi.c_str());*/
 				
 				//blit(p,arakatman,0,0,20,400,50,50); /* olası hata durumunda debug testi için */
-
 				
 			    blit(bck,arakatman,0,0,0,0,960,60);
                 blit(b1,arakatman,0,0,15,75,85,85);
@@ -112,9 +159,12 @@ char bos[15],cns[10],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12
 
                 /*kod yazarken mouse kordinatı yardımcısı & koltuk numarası bildirici*/
                 textprintf_ex(arakatman, font, 100, 0, makecol(255, 255, 255),-1, "x: %d y: %d", mouse_x,mouse_y);
-                textprintf_ex(arakatman, font , 300, 0, makecol(255, 255, 255),-1, "koltuk: %d ", knum);
-				textprintf_ex(arakatman, font , 300, 15, makecol(255, 255, 255),-1, "tarih: %s ", tarih);
-				textprintf_ex(arakatman, font , 300, 30, makecol(255, 255, 255),-1, "A.tbox: %d ", active_tbox);
+                textprintf_ex(arakatman, font , 220, 0, makecol(255, 255, 255),-1, "koltuk: %d ", knum);
+				textprintf_ex(arakatman, font , 220, 15, makecol(255, 255, 255),-1, "bus: %d ", bus);
+				textprintf_ex(arakatman, font , 300, 15, makecol(255, 255, 255),-1, "A.tbox1: %d ", active_tbox1);
+				textprintf_ex(arakatman, font , 300, 30, makecol(255, 255, 255),-1, "A.tbox2: %d ", active_tbox2);
+				textprintf_ex(arakatman, font , 300, 45, makecol(255, 255, 255),-1, "A.tbox3: %d ", active_tbox3);
+				textprintf_ex(arakatman, font , 400, 15, makecol(255, 255, 255),-1, "A.tbox4: %d ", active_tbox4);
 				textprintf_ex(arakatman, font , 400, 0, makecol(255, 255, 255),-1, "nereden: %s nereye: %s", nereden,nereye);
 				//textprintf_ex(arakatman, font , 300, 15, makecol(255, 255, 255),-1, "cnsyt char %s ", cns);
                 //********************mouse tıklamalar********************//
@@ -143,22 +193,77 @@ char bos[15],cns[10],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12
 						blit(tbox,arakatman2,0,0,115,180,200,30);
 
                 }
+				/*tbox1*/
 				if((mouse_b & 1) && mouse_x>310 && mouse_x<510 && mouse_y>75 && mouse_y<105 && menu==0)
                 {
 						tkx=115;
-						tky=350;
-						active_tbox=1;
+						tky=15;
+						active_tbox1=1;
 				}
-				if((mouse_b & 1) && !(mouse_x>310 && mouse_x<510) && menu==0 && active_tbox==true || (mouse_b & 1) && !(mouse_y>75 && mouse_y<105) && menu==0 && active_tbox==true )
+				if((mouse_b & 1) && !(mouse_x>310 && mouse_x<510) && menu==0 && active_tbox1==true || (mouse_b & 1) && !(mouse_y>75 && mouse_y<105) && menu==0 && active_tbox1==true )
                 {
 						tkx=0;
-						tky=300;
-						active_tbox=0;
+						tky=500;
+						active_tbox1=0;
 						txbox(tk1,0);
 				}
-				if(active_tbox==1)
+				if(active_tbox1==1)
 				{
 						txbox(tk1,0);
+				}
+				/*tbox2*/
+				if((mouse_b & 1) && mouse_x>310 && mouse_x<510 && mouse_y>240 && mouse_y<270 && menu==0)
+                {
+						tk2x=115;
+						tk2y=180;
+						active_tbox2=1;
+				}
+				if((mouse_b & 1) && !(mouse_x>310 && mouse_x<510) && menu==0 && active_tbox2==true || (mouse_b & 1) && !(mouse_y>240 && mouse_y<270) && menu==0 && active_tbox2==true )
+                {
+						tk2x=0;
+						tk2y=500;
+						active_tbox2=0;
+						txbox2(tk2,0);
+				}
+				if(active_tbox2==1)
+				{
+						txbox2(tk2,0);
+				}
+				/*tbox3*/
+				if((mouse_b & 1) && mouse_x>310 && mouse_x<510 && mouse_y>70 && mouse_y<100 && menu==1 || (mouse_b & 1) && mouse_x>310 && mouse_x<510 && mouse_y>70 && mouse_y<100 && menu==3)
+                {
+						tk3x=115;
+						tk3y=15;
+						active_tbox3=1;
+				}
+				if((mouse_b & 1) && !(mouse_x>310 && mouse_x<510) && menu==1 && active_tbox3==true || (mouse_b & 1) && !(mouse_y>70 && mouse_y<100) && menu==1 && active_tbox3==true || (mouse_b & 1) && !(mouse_x>310 && mouse_x<510) && menu==3 && active_tbox3==true || (mouse_b & 1) && !(mouse_y>70 && mouse_y<100) && menu==3 && active_tbox3==true )
+                {
+						tk3x=0;
+						tk3y=500;
+						active_tbox3=0;
+						txbox3(tk3,0);
+				}
+				if(active_tbox3==1)
+				{
+						txbox3(tk3,0);
+				}
+				/*tbox4*/
+				if((mouse_b & 1) && mouse_x>310 && mouse_x<510 && mouse_y>130 && mouse_y<160 && menu==1 )
+                {
+						tk4x=115;
+						tk4y=70;
+						active_tbox4=1;
+				}
+				if((mouse_b & 1) && !(mouse_x>310 && mouse_x<510) && menu==1 && active_tbox4==true || (mouse_b & 1) && !(mouse_y>130 && mouse_y<160) && menu==1 && active_tbox4==true )
+                {
+						tk4x=0;
+						tk4y=500;
+						active_tbox4=0;
+						txbox4(tk4,0);
+				}
+				if(active_tbox4==1)
+				{
+						txbox4(tk4,0);
 				}
 				/*if((mouse_b & 1) && mouse_x>310 && mouse_x<510 && mouse_y>180 && mouse_y<210)
                 {
@@ -191,9 +296,38 @@ char bos[15],cns[10],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12
 						blit(snr,arakatman2,0,0,390,430,85,28); 
 						blit(tbox,arakatman2,0,0,115,15,200,30);
 						blit(tbox,arakatman2,0,0,115,70,200,30);
-						sefer(arakatman2,0,200);
+						blit(sfr,arakatman2,0,0,0,210,522,122);
+						sefer_leyaz(arakatman2,5,220);
 
                 }
+				if((mouse_b & 1) && mouse_x>195 && mouse_x<717 && mouse_y>270 && mouse_y<300 && menu==1)
+				{
+						blit(sfr,arakatman2,0,0,0,210,522,122);
+						blit(sfrh,arakatman2,0,0,0,210,522,31);
+						sefer_leyaz(arakatman2,5,220);
+						bus=0;
+				}
+				if((mouse_b & 1) && mouse_x>195 && mouse_x<717 && mouse_y>300 && mouse_y<330 && menu==1)
+				{
+						blit(sfr,arakatman2,0,0,0,210,522,122);
+						blit(sfrh,arakatman2,0,0,0,240,522,31);
+						sefer_leyaz(arakatman2,5,220);
+						bus=1;
+				}
+				if((mouse_b & 1) && mouse_x>195 && mouse_x<717 && mouse_y>330 && mouse_y<360 && menu==1)
+				{
+						blit(sfr,arakatman2,0,0,0,210,522,122);
+						blit(sfrh,arakatman2,0,0,0,270,522,31);
+						sefer_leyaz(arakatman2,5,220);
+						bus=2;
+				}
+				if((mouse_b & 1) && mouse_x>195 && mouse_x<717 && mouse_y>360 && mouse_y<390 && menu==1)
+				{
+						blit(sfr,arakatman2,0,0,0,210,522,122);
+						blit(sfrh,arakatman2,0,0,0,300,522,31);
+						sefer_leyaz(arakatman2,5,220);
+						bus=3;
+				}
 				if((mouse_b & 1) && mouse_x>585 && mouse_x<670 && mouse_y>490 && mouse_y<518 && menu==1)
                 {
                         menu=-1;
@@ -202,15 +336,13 @@ char bos[15],cns[10],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12
 						clear_to_color(arakatman3,makecol(29,29,29));
 						blit(blt,arakatman2,0,0,0,160,500,281);
 						blit(ony,arakatman3,0,0,150,430,85,28); 
-						textprintf_ex(arakatman2, advent , 230, 220, makecol(255, 255, 255),-1, "%s --> ", nereden);
-						textprintf_ex(arakatman2, advent , 300, 220, makecol(255, 255, 255),-1, " %s", nereye);
-						textprintf_ex(arakatman2, advent , 230, 290, makecol(255, 255, 255),-1, "%s ", cns);
-						textprintf_ex(arakatman2, advent , 230, 360, makecol(255, 255, 255),-1, "%d ", knum);
+						bilet_goster(arakatman2);
+						bilet_kayit();
 
                 }
 				if((mouse_b & 1) && mouse_x>845 && mouse_x<930 && mouse_y>490 && mouse_y<518 && menu==-1)
                 {
-					/*save_fonksiyonu();*/
+					bilet_yaz();
 					clear_to_color(arakatman2,makecol(29,29,29));
 					clear_to_color(ckatman,makecol(29,29,29));
 					clear_to_color(arakatman3,makecol(29,29,29));
@@ -349,14 +481,11 @@ char bos[15],cns[10],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12
                         menu=2;
 						x=700;
 						z=700;
-						m=60;
                         clear_to_color(arakatman2,makecol(29,29,29));
 						clear_to_color(ckatman,makecol(29,29,29));
 						clear_to_color(arakatman3,makecol(29,29,29));
                         blit(sfttl,arakatman2,0,0,0,20,120,260);
-						sefer(arakatman2,0,0);
-
-
+						sefer_eyaz(arakatman2,0,60);
                 }
 				/* sorgula*/
                 if(!(mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>258 && mouse_y<328)
@@ -366,13 +495,26 @@ char bos[15],cns[10],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12
                 if((mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>258 && mouse_y<328)
                 {
                         menu=3;
-						x=350;
+						x=500;
                         clear_to_color(arakatman2,makecol(29,29,29));
 						clear_to_color(ckatman,makecol(29,29,29));
 						clear_to_color(arakatman3,makecol(29,29,29));
-                        blit(srgl,arakatman2,0,0,0,30,120,260);
-						blit(tbox,arakatman2,0,0,115,45,200,30);
-						blit(tbox,arakatman2,0,0,115,100,200,30);
+                        blit(srgl,arakatman2,0,0,0,0,120,60);
+						blit(tbox,arakatman2,0,0,115,15,200,30);
+						blit(srglb,arakatman2,0,0,350,15,85,28);
+						bilet_eyaz(arakatman2,0,100);
+                }
+				if((mouse_b & 1) && mouse_x>545 && mouse_x<630 && mouse_y>75 && mouse_y<103 && menu==3)
+                {
+                        menu=3;
+						x=500;
+                        clear_to_color(arakatman2,makecol(29,29,29));
+						clear_to_color(ckatman,makecol(29,29,29));
+						clear_to_color(arakatman3,makecol(29,29,29));
+                        blit(srgl,arakatman2,0,0,0,0,120,60);
+						blit(tbox,arakatman2,0,0,115,15,200,30);
+						bilet_eyaz(arakatman2,0,100);
+						bilet_karsilastir(arakatman2);
                 }
 				/*cinsiyet*/
                 if((mouse_b & 1) && mouse_x>315 && mouse_x<347 && mouse_y>170 && mouse_y<214 && menu==1)
@@ -414,7 +556,7 @@ char bos[15],cns[10],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12
                 knum = 4*(k-1)+1;
                 r= 51 + 38*(k-1);
                         /*koltuk bastırma*/
-                        if(cinsiyet==1)
+                        if(cinsiyet==1 )
                         {
 								if(ksec==1)
 								{
@@ -586,12 +728,16 @@ char bos[15],cns[10],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12
                         }
 					
                 }
+
 	blit(tk1,arakatman2,0,0,tkx,tky,200,30);
+	blit(tk2,arakatman2,0,0,tk2x,tk2y,200,30);
+	blit(tk3,arakatman2,0,0,tk3x,tk3y,200,30);
+	blit(tk4,arakatman2,0,0,tk4x,tk4y,200,30);
 	blit(ckatman,arakatman2,0,0,x,y,300,44);
 	blit(arakatman3,arakatman2,0,0,z,0,263,480);
 	blit(arakatman2,arakatman,0,0,195,60,760,480);
 	blit(arakatman,screen,0,0,0,0,960,540);
-	rest(60);
+	sefer_yaz();
 }
 Bitir();
 return 0;
@@ -617,9 +763,9 @@ install_mouse();
 void Bitir() {
 clear_keybuf();
 }
-void txbox(BITMAP *arakatman, int a)
+void txbox(BITMAP *arakatman, int a) // textbox1 tarihi tutan textbox fonsksiyonu 
 {
-	if(active_tbox==1)
+	if(active_tbox1==1)
 	{
 	while(keypressed())
       {
@@ -657,7 +803,6 @@ void txbox(BITMAP *arakatman, int a)
 							 caret--;
 							 iter--;
 							 iter = edittext.erase(iter);
-							 eleman_sayisi--;
 						  }
 					   break;
  
@@ -681,90 +826,422 @@ void txbox(BITMAP *arakatman, int a)
 	 clear_to_color(arakatman,makecol(255,255,255)); 
 	 vline(arakatman, caret * 8, 8, 18, BLACK);
 	 textprintf_ex(arakatman , font,0,10,BLACK,-1,edittext.c_str());
-	 if(a==0)
-	 {
-		tarih=edittext.c_str();
-	 }
-	 if(a==1)
-	 {
-		yolcu=edittext.c_str();
-	 }
-	 if(a==2)
-	 {
-		ad=edittext.c_str();
-	 }
-	 if(a==3)
-	 {
-		soyad=edittext.c_str();
-	 }
-	 if(a==4)
-	 {
-		ad_s=edittext.c_str();
-	 }
-	 if(a==5)
-	 {
-		soyad_s=edittext.c_str();
-	 }
-
-		 //textout(arakatman, font, dizi, 0, 10, WHITE);  /// ONEMLİ
 				
-		 }
+	}
+	
+}
+void txbox2(BITMAP *arakatman, int a)	// textbox2 yolcu sayisini tutan textbox fonsksiyonu 
+{
+	if(active_tbox2==1)
+	{
+	while(keypressed())
+      {
+
+         int  newkey   = readkey();
+         char ASCII    = newkey & 0xff;
+         char scancode = newkey >> 8;
+		 
+		 
+				 // hangi karakter tuştan basıldıysa onu stringe ekle
+				 if(ASCII >= 32 && ASCII <= 126)
+				 {
+					// yeni karakter ekleme, yerleştirme yada yenileme için lazım
+					if(insert2 || iter2 == edittext2.end())
+					   iter2 = edittext2.insert(iter2, ASCII);
+					else
+					   edittext2.replace(caret2, 1, 1, ASCII);
+ 
+					//  caret ve iterator ün artırılması
+					caret2++;
+					iter2++;
+				 }
+	     
+				// Diğer, "özel" tuşlar basıldığında; yapılacaklar
+				 else
+					switch(scancode)
+					{
+					   case KEY_DEL:
+						  if(iter2 != edittext2.end()) iter2 = edittext2.erase(iter);
+					   break;
+ 
+					   case KEY_BACKSPACE:
+						  if(iter2 != edittext2.begin())
+						  {
+							 caret2--;
+							 iter2--;
+							 iter2 = edittext2.erase(iter2);
+						  }
+					   break;
+ 
+					   case KEY_RIGHT:
+						  if(iter2 != edittext2.end())   caret2++, iter2++;
+					   break;
+ 
+					   case KEY_LEFT:
+						  if(iter2 != edittext2.begin()) caret2--, iter2--;
+					   break;
+ 
+					   case KEY_INSERT:
+						  if(insert2) insert2 = 0; else insert2 = 1;
+					   break;
+ 
+					   default:
+ 
+					   break;
+					}
+			}
+	 clear_to_color(arakatman,makecol(255,255,255)); 
+	 vline(arakatman, caret2 * 8, 8, 18, BLACK);
+	 textprintf_ex(arakatman , font,0,10,BLACK,-1,edittext2.c_str());
+				
+	}
 	
 }
 
-void sefer(BITMAP *arakatman,int o,int p)
+void txbox3(BITMAP *arakatman, int a)	// textbox3 isimi tutan textbox fonsksiyonu 
 {
-		dosya=fopen(filename,"r+");
+	if(active_tbox3==1)
+	{
+	while(keypressed())
+      {
 
-		if(dosya==NULL)
-		{
-    		textout_ex(arakatman,font,"Sefer bulunamadı",0,0,makecol(255,255,255),-1);
-      		exit(1);
-		}
-		char ch;
-		ch=fgetc(dosya);
-		while(ch!=EOF)
-		{
-			if(ch!=42)
-			{
-			textprintf_ex(arakatman, font, l+o, m+p, makecol(255, 255, 255),-1, "%c", ch);
+         int  newkey   = readkey();
+         char ASCII    = newkey & 0xff;
+         char scancode = newkey >> 8;
+		 
+		 
+				 // hangi karakter tuştan basıldıysa onu stringe ekle
+				 if(ASCII >= 32 && ASCII <= 126)
+				 {
+					// yeni karakter ekleme, yerleştirme yada yenileme için lazım
+					if(insert3 || iter3 == edittext3.end())
+					   iter3 = edittext3.insert(iter3, ASCII);
+					else
+					   edittext3.replace(caret3, 1, 1, ASCII);
+ 
+					//  caret ve iterator ün artırılması
+					caret3++;
+					iter3++;
+				 }
+	     
+				// Diğer, "özel" tuşlar basıldığında; yapılacaklar
+				 else
+					switch(scancode)
+					{
+					   case KEY_DEL:
+						  if(iter3 != edittext3.end()) iter3 = edittext3.erase(iter);
+					   break;
+ 
+					   case KEY_BACKSPACE:
+						  if(iter3 != edittext3.begin())
+						  {
+							 caret3--;
+							 iter3--;
+							 iter3 = edittext3.erase(iter3);
+						  }
+					   break;
+ 
+					   case KEY_RIGHT:
+						  if(iter3 != edittext3.end())   caret3++, iter3++;
+					   break;
+ 
+					   case KEY_LEFT:
+						  if(iter3 != edittext3.begin()) caret3--, iter3--;
+					   break;
+ 
+					   case KEY_INSERT:
+						  if(insert3) insert3 = 0; else insert3 = 1;
+					   break;
+ 
+					   default:
+ 
+					   break;
+					}
 			}
-    		ch=fgetc(dosya);
-    		fflush(stdin);
-			l+=7;
-			counter++;
-			if(ch==42)
-			{
-				l=0;
-				m+=20;
-				counter=0;
-			}
-		}
-		fclose(dosya);
+	 clear_to_color(arakatman,makecol(255,255,255)); 
+	 vline(arakatman, caret3 * 8, 8, 18, BLACK);
+	 textprintf_ex(arakatman , font,0,10,BLACK,-1,edittext3.c_str());
+				
+	}
+	
 }
 
-void koltuk_oku(BITMAP *arakatman)
+void txbox4(BITMAP *arakatman, int a)	// textbox4 soyisimi tutan textbox fonsksiyonu 
 {
-	int a=0;
-	char b;
-	dosya_k=fopen(d_adi,"r+");
-		if(oku_b==false)	//sürekli okumayı durdurmak için
-		{
-			char ch;
-			ch=fgetc(dosya_k);
-			while(ch!=42)
+	if(active_tbox4==1)
+	{
+	while(keypressed())
+      {
+
+         int  newkey   = readkey();
+         char ASCII    = newkey & 0xff;
+         char scancode = newkey >> 8;
+		 
+		 
+				 // hangi karakter tuştan basıldıysa onu stringe ekle
+				 if(ASCII >= 32 && ASCII <= 126)
+				 {
+					// yeni karakter ekleme, yerleştirme yada yenileme için lazım
+					if(insert4 || iter4 == edittext4.end())
+					   iter4 = edittext4.insert(iter4, ASCII);
+					else
+					   edittext4.replace(caret4, 1, 1, ASCII);
+ 
+					//  caret ve iterator ün artırılması
+					caret4++;
+					iter4++;
+				 }
+	     
+				// Diğer, "özel" tuşlar basıldığında; yapılacaklar
+				 else
+					switch(scancode)
+					{
+					   case KEY_DEL:
+						  if(iter4 != edittext4.end()) iter4 = edittext4.erase(iter);
+					   break;
+ 
+					   case KEY_BACKSPACE:
+						  if(iter4 != edittext4.begin())
+						  {
+							 caret4--;
+							 iter4--;
+							 iter4 = edittext4.erase(iter4);
+						  }
+					   break;
+ 
+					   case KEY_RIGHT:
+						  if(iter4 != edittext4.end())   caret4++, iter4++;
+					   break;
+ 
+					   case KEY_LEFT:
+						  if(iter4 != edittext4.begin()) caret4--, iter4--;
+					   break;
+ 
+					   case KEY_INSERT:
+						  if(insert4) insert4 = 0; else insert4 = 1;
+					   break;
+ 
+					   default:
+ 
+					   break;
+					}
+			}
+	 clear_to_color(arakatman,makecol(255,255,255)); 
+	 vline(arakatman, caret4 * 8, 8, 18, BLACK);
+	 textprintf_ex(arakatman , font,0,10,BLACK,-1,edittext4.c_str());
+				
+	}
+	
+}
+
+void sefer_yaz() // sefer struct ını sefer.txt ye yazan fonksiyon
+{
+	dosya_y=fopen(d_adi_y,"w+");
+
+			for(int a=0;a<4;a++)
+			{		
+    				fprintf(dosya_y, "%s ",oto[a].tarih);
+					fprintf(dosya_y, "%s ",oto[a].nereden);
+					fprintf(dosya_y, "%s ",oto[a].nereye);
+					fprintf(dosya_y, "%d ",oto[a].boskoltuk);
+					fprintf(dosya_y, "%s ",oto[a].seferkodu);
+					fprintf(dosya_y, "%d ",oto[a].fiyat);
+					fprintf(dosya_y, "%s ",oto[a].koltuk);
+					fprintf(dosya_y, "\n");
+			}
+	fclose(dosya_y);
+}
+
+void sefer_oku()	// sefer.txt dosyasını structa alan fonksiyon
+{
+	dosya_y=fopen(d_adi_y,"r+");
+
+			for(int a=0;a<4;a++)
 			{
-				textprintf_ex(arakatman, font, l, m, makecol(255, 255, 255),-1, "%c", ch);
-				koltuk[a]=ch;
-				a++;
-    			ch=fgetc(dosya_k);
-    			fflush(stdin);
-				l+=8;
-				oku_b=true;
+					
+    				fscanf(dosya_y, "%s ",&oto[a].tarih);
+					fscanf(dosya_y, "%s ",&oto[a].nereden);
+					fscanf(dosya_y, "%s ",&oto[a].nereye);
+					fscanf(dosya_y, "%d ",&oto[a].boskoltuk);
+					fscanf(dosya_y, "%s ",&oto[a].seferkodu);
+					fscanf(dosya_y, "%d ",&oto[a].fiyat);
+					fscanf(dosya_y, "%s ",&oto[a].koltuk);
+			}
+
+	fclose(dosya_y);
+}
+
+void bilet_yaz()	// bilet struct ını bilet.txt ye yazan fonksiyon
+{
+	dosya_b=fopen(d_b,"w+");
+
+			for(int a=0;a<4;a++)
+			{		
+    				fprintf(dosya_b, "%s ",bil[a].ad);
+					fprintf(dosya_b, "%s ",bil[a].soyad);
+					fprintf(dosya_b, "%s ",bil[a].nereden);
+					fprintf(dosya_b, "%s ",bil[a].nereye);
+					fprintf(dosya_b, "%d ",bil[a].fiyat);
+					fprintf(dosya_b, "%s ",bil[a].tarih);
+					fprintf(dosya_b, "%s ",bil[a].seferkodu);
+					fprintf(dosya_b, "\n");
+			}
+	fclose(dosya_b);
+}
+
+void bilet_oku()	// bilet.txt dosyasını structa alan fonksiyon
+{
+	dosya_b=fopen(d_b,"r+");
+
+			for(int a=0;a<4;a++)
+			{
+					
+    				fscanf(dosya_b, "%s ",&bil[a].ad);
+					fscanf(dosya_b, "%s ",&bil[a].soyad);
+					fscanf(dosya_b, "%s ",&bil[a].nereden);
+					fscanf(dosya_b, "%s ",&bil[a].nereye);
+					fscanf(dosya_b, "%d ",&bil[a].fiyat);
+					fscanf(dosya_b, "%s ",&bil[a].tarih);
+					fscanf(dosya_b, "%s ",&bil[a].seferkodu);
+			}
+
+	fclose(dosya_b);
+}
+
+
+void sefer_eyaz(BITMAP *arakatman,int x,int y) // seferler menüsü için sefer.txt dosyasını ekrana basan fonksiyon
+{
+	int b=0,d=0;
+			for(int a=0;a<4;a++)
+			{
+					
+    				textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",oto[a].tarih);
+					b+=150;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",oto[a].nereden);
+					b+=100;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",oto[a].nereye);
+					b+=100;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%d",oto[a].boskoltuk);
+					b+=50;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",oto[a].seferkodu);
+					b+=70;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%d",oto[a].fiyat);
+					b+=70;
+					d+=30;
+					b=0;
 
 			}
-			l=0;
-		}
-
-	fclose(dosya_k);
 }
+
+void sefer_leyaz(BITMAP *arakatman,int x,int y)	// yeni bilet menüsü için sefer.txt dosyasını ekrana basan fonksiyon
+{
+	int b=0,d=0;
+			for(int a=0;a<4;a++)
+			{	
+    				textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",oto[a].tarih);
+					b+=150;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",oto[a].nereden);
+					b+=100;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",oto[a].nereye);
+					b+=100;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%d",oto[a].boskoltuk);
+					b+=50;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",oto[a].seferkodu);
+					b+=70;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%d",oto[a].fiyat);
+					b+=70;
+					d+=30;
+					b=0;
+			}
+}
+
+void bilet_eyaz(BITMAP *arakatman,int x,int y)	// bilet.txt dosyasını ekrana basan fonksiyon
+{
+	int b=0,d=0;
+			for(int a=0;a<4;a++)
+			{
+					
+    				textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",bil[a].ad);
+					b+=60;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",bil[a].soyad);
+					b+=60;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",bil[a].nereden);
+					b+=70;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",bil[a].nereye);
+					b+=80;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%d",bil[a].fiyat);
+					b+=40;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",bil[a].tarih);
+					b+=140;
+					textprintf_ex(arakatman,font,b+x,d+y,WHITE,-1,"%s",bil[a].seferkodu);
+					b+=70;
+					d+=30;
+					b=0;
+			}
+}
+
+void bilet_karsilastir(BITMAP *arakatman)	// sorgulama ekraında bilet sorgulama işlemini yapan fonksiyon
+{
+	int j=0;
+	for(int i=0;i<4;i++)
+	{
+		if(strcmp(edittext3.c_str(),bil[i].ad)==0)
+		{
+			textprintf_ex(arakatman,font,0,65,WHITE,-1,"kisi sistemde kayitli");
+			j++;
+		}
+	}
+	if(j==0)
+	{
+		textprintf_ex(arakatman,font,0,65,WHITE,-1,"boyle biri sisteme kayitli degil");
+	}
+	
+}
+
+void bilet_goster(BITMAP *arakatman)	// son ekranda bileti yapilan seçimlere göre ekrana basma
+{
+textprintf_ex(arakatman, font , 230, 220, makecol(255, 255, 255),-1, "%s ", oto[bus].nereden);
+textprintf_ex(arakatman, font , 330, 220, makecol(255, 255, 255),-1, "%s", oto[bus].nereye);
+textprintf_ex(arakatman, font , 230, 295, makecol(255, 255, 255),-1, "%s ", cns);
+textprintf_ex(arakatman, font , 230, 365, makecol(255, 255, 255),-1, "%d ", knum);
+textprintf_ex(arakatman, font , 230, 255, makecol(255, 255, 255),-1, "%s", oto[bus].tarih);
+textprintf_ex(arakatman, font , 230, 180, makecol(255, 255, 255),-1, "%s ", edittext3.c_str());	//isim
+textprintf_ex(arakatman, font , 300, 180, makecol(255, 255, 255),-1, "%s ", edittext4.c_str());	//soyisim
+textprintf_ex(arakatman, font , 230, 325, makecol(255, 255, 255),-1, "%s ", oto[bus].seferkodu);
+textprintf_ex(arakatman, font , 230, 400, makecol(255, 255, 255),-1, "%d TL ", oto[bus].fiyat);
+}
+
+void bilet_kayit()	// alınan bileti structa kaydetme
+{
+
+	strcpy(bil[0].ad,edittext3.c_str());
+	strcpy(bil[0].soyad,edittext4.c_str());
+	strcpy(bil[0].nereden,oto[bus].nereden);
+	strcpy(bil[0].nereye,oto[bus].nereye);
+	bil[0].fiyat=oto[bus].fiyat;
+	strcpy(bil[0].tarih,oto[bus].tarih);
+	strcpy(bil[0].seferkodu,oto[bus].seferkodu);
+	oto[bus].boskoltuk-=1;
+
+}
+
+//void koltuk(BITMAP *arakatman)
+//{
+//
+//	if(bus==0)
+//	{
+//	}
+//	if(bus==1)
+//	{
+//	}
+//	if(bus==2)
+//	{
+//	}
+//	if(bus==3)
+//	{
+//	}
+//	//if(strcmp(oto[d].koltuk[i],e)==0)
+//	//if(strcmp(oto[d].koltuk[i],k)==0)
+//	//if(strcmp(oto[d].koltuk[i],b)==0)
+//
+//}
