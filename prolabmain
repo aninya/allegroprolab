@@ -3,7 +3,6 @@
 #include <string>
 #include <string.h> 
 
-
 #define BLACK makecol(0, 0, 0)
 #define WHITE makecol(255, 255, 255)
 
@@ -72,11 +71,13 @@ void bilet_karsilastir(BITMAP *);
 void bilet_goster(BITMAP *);
 void bilet_kayit();
 void koltuk(BITMAP *);
+void yolcu_sayi_int();
 void Baslat();
 void Bitir();
 
-int bus,knum=0;
+int bus,knum=0,ysay=-3,counterysay=0;;
 char cns[10];
+
 
 int main() {
 Baslat();
@@ -158,14 +159,15 @@ char bos[15],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12]="kocae
 				//}
 
                 /*kod yazarken mouse kordinatı yardımcısı & koltuk numarası bildirici*/
-                textprintf_ex(arakatman, font, 100, 0, makecol(255, 255, 255),-1, "x: %d y: %d", mouse_x,mouse_y);
-                textprintf_ex(arakatman, font , 220, 0, makecol(255, 255, 255),-1, "koltuk: %d ", knum);
-				textprintf_ex(arakatman, font , 220, 15, makecol(255, 255, 255),-1, "bus: %d ", bus);
-				textprintf_ex(arakatman, font , 300, 15, makecol(255, 255, 255),-1, "A.tbox1: %d ", active_tbox1);
-				textprintf_ex(arakatman, font , 300, 30, makecol(255, 255, 255),-1, "A.tbox2: %d ", active_tbox2);
-				textprintf_ex(arakatman, font , 300, 45, makecol(255, 255, 255),-1, "A.tbox3: %d ", active_tbox3);
-				textprintf_ex(arakatman, font , 400, 15, makecol(255, 255, 255),-1, "A.tbox4: %d ", active_tbox4);
-				textprintf_ex(arakatman, font , 400, 0, makecol(255, 255, 255),-1, "nereden: %s nereye: %s", nereden,nereye);
+    //            textprintf_ex(arakatman, font, 100, 0, makecol(255, 255, 255),-1, "x: %d y: %d", mouse_x,mouse_y);
+    //            textprintf_ex(arakatman, font , 220, 0, makecol(255, 255, 255),-1, "koltuk: %d ", knum);
+				//textprintf_ex(arakatman, font , 220, 15, makecol(255, 255, 255),-1, "bus: %d ", bus);
+				//textprintf_ex(arakatman, font , 150, 30, makecol(255, 255, 255),-1, "ysay: %d cysay: %d ", ysay,counterysay);
+				//textprintf_ex(arakatman, font , 300, 15, makecol(255, 255, 255),-1, "A.tbox1: %d ", active_tbox1);
+				//textprintf_ex(arakatman, font , 300, 30, makecol(255, 255, 255),-1, "A.tbox2: %d ", active_tbox2);
+				//textprintf_ex(arakatman, font , 300, 45, makecol(255, 255, 255),-1, "A.tbox3: %d ", active_tbox3);
+				//textprintf_ex(arakatman, font , 400, 15, makecol(255, 255, 255),-1, "A.tbox4: %d ", active_tbox4);
+				//textprintf_ex(arakatman, font , 400, 0, makecol(255, 255, 255),-1, "nereden: %s nereye: %s", nereden,nereye);
 				//textprintf_ex(arakatman, font , 300, 15, makecol(255, 255, 255),-1, "cnsyt char %s ", cns);
                 //********************mouse tıklamalar********************//
                 if(!(mouse_b & 1) && mouse_x>900 && mouse_x<960 && mouse_y>0 && mouse_y<60)
@@ -193,6 +195,21 @@ char bos[15],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12]="kocae
 						blit(tbox,arakatman2,0,0,115,180,200,30);
 
                 }
+				if((mouse_b & 1) && mouse_x>15 && mouse_x<100 && mouse_y>75 && mouse_y<160 && ysay>1)
+                {
+                        menu=0;
+						x=350;
+						z=500;
+                        clear_to_color(arakatman2,makecol(29,29,29));
+						clear_to_color(ckatman,makecol(29,29,29));
+						clear_to_color(arakatman3,makecol(29,29,29));
+						blit(snr,arakatman3,0,0,150,430,85,28); 
+                        blit(ttl1,arakatman2,0,0,0,0,120,260);
+						blit(tbox,arakatman2,0,0,115,15,200,30);
+						blit(combo,arakatman2,0,0,115,70,200,30);
+						blit(combo,arakatman2,0,0,115,125,200,30);
+
+                }
 				/*tbox1*/
 				if((mouse_b & 1) && mouse_x>310 && mouse_x<510 && mouse_y>75 && mouse_y<105 && menu==0)
                 {
@@ -212,7 +229,7 @@ char bos[15],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12]="kocae
 						txbox(tk1,0);
 				}
 				/*tbox2*/
-				if((mouse_b & 1) && mouse_x>310 && mouse_x<510 && mouse_y>240 && mouse_y<270 && menu==0)
+				if((mouse_b & 1) && mouse_x>310 && mouse_x<510 && mouse_y>240 && mouse_y<270 && menu==0 && ysay<2)
                 {
 						tk2x=115;
 						tk2y=180;
@@ -338,6 +355,7 @@ char bos[15],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12]="kocae
 						blit(ony,arakatman3,0,0,150,430,85,28); 
 						bilet_goster(arakatman2);
 						bilet_kayit();
+						counterysay++;
 
                 }
 				if((mouse_b & 1) && mouse_x>845 && mouse_x<930 && mouse_y>490 && mouse_y<518 && menu==-1)
@@ -358,7 +376,11 @@ char bos[15],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12]="kocae
 				}
 					
 				}*/
-
+				if(counterysay==ysay)
+				{
+					bilet_yaz();
+					return 0;
+				}
 				///combobox1///
 				if((mouse_b & 1) && mouse_x>310 && mouse_x<510 && mouse_y>130 && mouse_y<160 && menu==0 && comb==0)
                 {
@@ -737,6 +759,7 @@ char bos[15],er[10]="erkek",ba[10]="bayan",nereden[12],nereye[12],koc[12]="kocae
 	blit(arakatman3,arakatman2,0,0,z,0,263,480);
 	blit(arakatman2,arakatman,0,0,195,60,760,480);
 	blit(arakatman,screen,0,0,0,0,960,540);
+	yolcu_sayi_int();
 	sefer_yaz();
 }
 Bitir();
@@ -1214,15 +1237,35 @@ textprintf_ex(arakatman, font , 230, 400, makecol(255, 255, 255),-1, "%d TL ", o
 void bilet_kayit()	// alınan bileti structa kaydetme
 {
 
-	strcpy(bil[0].ad,edittext3.c_str());
-	strcpy(bil[0].soyad,edittext4.c_str());
-	strcpy(bil[0].nereden,oto[bus].nereden);
-	strcpy(bil[0].nereye,oto[bus].nereye);
-	bil[0].fiyat=oto[bus].fiyat;
-	strcpy(bil[0].tarih,oto[bus].tarih);
-	strcpy(bil[0].seferkodu,oto[bus].seferkodu);
-	oto[bus].boskoltuk-=1;
+	strcpy(bil[counterysay].ad,edittext3.c_str());
+	strcpy(bil[counterysay].soyad,edittext4.c_str());
+	strcpy(bil[counterysay].nereden,oto[bus].nereden);
+	strcpy(bil[counterysay].nereye,oto[bus].nereye);
+	bil[counterysay].fiyat=oto[bus].fiyat;
+	strcpy(bil[counterysay].tarih,oto[bus].tarih);
+	strcpy(bil[counterysay].seferkodu,oto[bus].seferkodu);
+	oto[bus].boskoltuk-=1; // her bilet alındığında seferdeki bos koltuk sayısını azalt
 
+}
+
+void yolcu_sayi_int() // textbox2 den alınan char türündeki yolcu sayısını inte ceviren fonksiyon
+{
+	if(strcmp(edittext2.c_str(),"1")==0)
+	{
+		ysay=1;
+	}
+	if(strcmp(edittext2.c_str(),"2")==0)
+	{
+		ysay=2;
+	}
+	if(strcmp(edittext2.c_str(),"3")==0)
+	{
+		ysay=3;
+	}
+	if(strcmp(edittext2.c_str(),"4")==0)
+	{
+		ysay=4;
+	}
 }
 
 //void koltuk(BITMAP *arakatman)
